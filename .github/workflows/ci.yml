@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Run unit tests
+        run: cargo test --locked
+      - name: Build debug binary and run PTY integration tests
+        run: |
+          cargo build --locked
+          python3 tests/cli_pty.py
+      - name: Build release binary
+        run: cargo build --release --locked

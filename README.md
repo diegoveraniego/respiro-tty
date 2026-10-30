@@ -31,8 +31,12 @@ Looking for the native **GTK4 / Libadwaita GNOME desktop app** with organic vect
 
 - **Zero numerical stress**: Shows only the current phase and smooth visual progress — no countdown numbers, ticking seconds, or productivity metrics.
 - **Two ASCII geometries**:
-  - `orb` (default): An organic ASCII circle that expands smoothly on inhale, holds steady, and contracts on exhale.
+  - `orb` (default): An ASCII circle that expands smoothly on inhale, holds steady, and contracts on exhale.
   - `path`: Traces `@` along a 2-phase lens, 3-phase triangle, or 4-phase box depending on how many phases are active in your pattern.
+- **Subtle ANSI phase colors**: Highlights the active breath trajectory and phase label by phase (cyan inhale, blue hold, green exhale, yellow pause) while dimming background guides. Respects `--no-color` and the `NO_COLOR` standard.
+- **Live keyboard switching**: Toggle between `orb` and `path` on the fly with <kbd>a</kbd> / <kbd>Tab</kbd>, or switch breathing patterns live with <kbd>p</kbd> or <kbd>1</kbd>–<kbd>4</kbd>.
+- **Optional terminal bell (`--bell` / `-b`)**: Emits `\a` (`BEL`) on phase transitions so you can breathe with your eyes closed if your terminal supports audible or visual bell.
+- **Configurable Zen auto-hide (`config.conf`)**: Optionally auto-hide the bottom controls hint after inactivity via `~/.config/respiro-tty/config.conf` (or `--auto-hide`).
 - **Inline `--compact` mode**: Renders a 3-line breathing bar directly inside your current terminal prompt without switching to the alternate screen.
 - **Static `--snapshot` mode**: Outputs a pure ASCII frame (zero ANSI escape codes) for **Fastfetch** logos or piping.
 - **English by default, Spanish configurable**: Runs in English out of the box (`Inhale`, `Hold`, `Exhale`, `Rest`); pass `--lang es` (or `-l es`, or set `RESPIRO_LANG=es`) for Spanish (`Inhala`, `Manten`, `Exhala`, `Descansa`).
@@ -71,8 +75,8 @@ respiro-tty --pattern coherent --compact --cycles 3
 respiro-tty --pattern 4-0-6-0
 respiro-tty --pattern 2.5,1,5,0
 
-# Spanish translation (--lang es / -l es / RESPIRO_LANG=es)
-respiro-tty --lang es --pattern relax
+# Spanish translation + phase bell + monochrome mode
+respiro-tty --lang es --pattern relax --bell --no-color
 
 # List built-in patterns or show help
 respiro-tty --list-patterns
@@ -85,7 +89,26 @@ respiro-tty --help
 | :--- | :--- |
 | <kbd>Space</kbd> | Pause / Resume session |
 | <kbd>r</kbd> | Reset current cycle |
+| <kbd>a</kbd> / <kbd>Tab</kbd> | Toggle animation (`orb` ↔ `path`) live |
+| <kbd>p</kbd> / <kbd>1</kbd>–<kbd>4</kbd> | Cycle or select preset pattern (`5-5-5-5`, `4-4-4-4`, `4-7-8`, `5-5`) |
 | <kbd>q</kbd> / <kbd>Esc</kbd> / <kbd>Ctrl+C</kbd> | Quit and restore terminal |
+
+## ⚙️ Configuration File (`~/.config/respiro-tty/config.conf`)
+
+All settings are optional (CLI flags always take precedence):
+
+```ini
+# Auto-hide the bottom controls hint during active sessions (default: false)
+auto_hide = true
+auto_hide_secs = 3.5
+
+# Default session preferences
+pattern = 5-5-5-5
+animation = orb
+lang = en
+color = true
+bell = false
+```
 
 ## ⚡ Fastfetch Integration
 
