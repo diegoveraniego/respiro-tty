@@ -1,0 +1,16 @@
+[package]
+name = "respiro-tty"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Meditation from your terminal — because touching grass isn't POSIX-compliant."
+repository = "https://github.com/diegoveraniego/respiro-tty"
+keywords = ["meditation", "breathing", "tty", "terminal", "ascii"]
+categories = ["command-line-utilities"]
+
+[[bin]]
+name = "respiro-tty"
+path = "src/main.rs"
+
+[dependencies]
+libc = "0.2"
